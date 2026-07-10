@@ -1,4 +1,4 @@
-import { Home, User } from 'lucide-react';
+import { Building2, Home, User, Users } from 'lucide-react';
 import { z } from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -16,6 +16,16 @@ const routes = [
         path: pathsConfig.app.home,
         Icon: <Home className={iconClasses} />,
         end: true,
+      },
+      {
+        label: 'Arrendadores',
+        path: pathsConfig.app.arrendadores,
+        Icon: <Users className={iconClasses} />,
+      },
+      {
+        label: 'Propiedades',
+        path: pathsConfig.app.propiedades,
+        Icon: <Building2 className={iconClasses} />,
       },
     ],
   },
