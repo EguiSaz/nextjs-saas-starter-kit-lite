@@ -126,6 +126,56 @@ export type Database = {
           },
         ]
       }
+      inquilinos: {
+        Row: {
+          contacto_emergencia: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          identificacion: string | null
+          nombre: string
+          notas: string | null
+          organization_id: string
+          telefono: string | null
+          updated_at: string
+        }
+        Insert: {
+          contacto_emergencia?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          identificacion?: string | null
+          nombre: string
+          notas?: string | null
+          organization_id: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contacto_emergencia?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          identificacion?: string | null
+          nombre?: string
+          notas?: string | null
+          organization_id?: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inquilinos_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invitations: {
         Row: {
           created_at: string
