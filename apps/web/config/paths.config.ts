@@ -17,6 +17,7 @@ const PathsSchema = z.object({
     inquilinos: z.string().min(1),
     contratos: z.string().min(1),
     incidencias: z.string().min(1),
+    plantillas: z.string().min(1),
   }),
 });
 
@@ -37,6 +38,7 @@ const pathsConfig = PathsSchema.parse({
     inquilinos: '/home/inquilinos',
     contratos: '/home/contratos',
     incidencias: '/home/incidencias',
+    plantillas: '/home/plantillas',
   },
 } satisfies z.infer<typeof PathsSchema>);
 

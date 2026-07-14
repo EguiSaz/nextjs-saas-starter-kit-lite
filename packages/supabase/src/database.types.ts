@@ -464,6 +464,47 @@ export type Database = {
         }
         Relationships: []
       }
+      plantillas: {
+        Row: {
+          contenido: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          nombre: string
+          organization_id: string
+          tipo: Database["public"]["Enums"]["tipo_plantilla"]
+          updated_at: string
+        }
+        Insert: {
+          contenido?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          nombre: string
+          organization_id: string
+          tipo?: Database["public"]["Enums"]["tipo_plantilla"]
+          updated_at?: string
+        }
+        Update: {
+          contenido?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          nombre?: string
+          organization_id?: string
+          tipo?: Database["public"]["Enums"]["tipo_plantilla"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plantillas_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       propiedades: {
         Row: {
           alias: string
@@ -691,6 +732,7 @@ export type Database = {
       estado_propiedad: "disponible" | "ocupada" | "inactiva"
       prioridad_incidencia: "baja" | "media" | "alta"
       responsable_pago: "arrendador" | "inquilino"
+      tipo_plantilla: "contrato" | "recordatorio" | "recibo" | "otro"
       tipo_propiedad:
         | "departamento"
         | "casa"
@@ -1390,6 +1432,7 @@ export const Constants = {
       estado_propiedad: ["disponible", "ocupada", "inactiva"],
       prioridad_incidencia: ["baja", "media", "alta"],
       responsable_pago: ["arrendador", "inquilino"],
+      tipo_plantilla: ["contrato", "recordatorio", "recibo", "otro"],
       tipo_propiedad: [
         "departamento",
         "casa",
