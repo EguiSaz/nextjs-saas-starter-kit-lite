@@ -22,20 +22,21 @@ function Home() {
       <div className={'container mx-auto'}>
         <Hero
           pill={
-            <Pill label={'New'}>
-              <span>The leading SaaS Starter Kit for ambitious developers</span>
+            <Pill label={'Nuevo'}>
+              <span>Administración de propiedades en renta, para México</span>
             </Pill>
           }
           title={
             <>
-              <span>The ultimate SaaS Starter</span>
-              <span>for your next project</span>
+              <span>Administra tus rentas</span>
+              <span>sin hojas de cálculo</span>
             </>
           }
           subtitle={
             <span>
-              Build and Ship a SaaS faster than ever before with the next-gen
-              SaaS Starter Kit. Ship your SaaS in days, not months.
+              GestorPro reúne arrendadores, inquilinos, contratos, pagos y
+              comisiones en un solo lugar. Lleva el control de tus propiedades
+              con claridad y sin esfuerzo.
             </span>
           }
           cta={<MainCallToActionButton />}
@@ -62,47 +63,47 @@ function Home() {
             heading={
               <>
                 <b className="font-semibold dark:text-white">
-                  The ultimate SaaS Starter Kit
+                  Todo tu negocio de rentas en un lugar
                 </b>
                 .{' '}
                 <span className="text-muted-foreground font-normal">
-                  Unleash your creativity and build your SaaS faster than ever
-                  with Makerkit.
+                  Desde el contrato hasta el cobro, GestorPro te da el control
+                  completo de tus propiedades.
                 </span>
               </>
             }
             icon={
               <FeatureShowcaseIconContainer>
                 <LayoutDashboard className="h-5" />
-                <span>All-in-one solution</span>
+                <span>Solución integral</span>
               </FeatureShowcaseIconContainer>
             }
           >
             <FeatureGrid>
               <FeatureCard
                 className={'relative col-span-2 overflow-hidden'}
-                label={'Beautiful Dashboard'}
-                description={`Makerkit provides a beautiful dashboard to manage your SaaS business.`}
+                label={'Arrendadores y comisiones'}
+                description={`Administra dueños propios y de terceros, cada uno con su porcentaje de comisión.`}
               />
 
               <FeatureCard
                 className={
                   'relative col-span-2 w-full overflow-hidden lg:col-span-1'
                 }
-                label={'Authentication'}
-                description={`Makerkit provides a variety of providers to allow your users to sign in.`}
+                label={'Contratos'}
+                description={`Crea contratos, controla que solo haya uno activo por propiedad y cierra con manejo del depósito.`}
               />
 
               <FeatureCard
                 className={'relative col-span-2 overflow-hidden lg:col-span-1'}
-                label={'Multi Tenancy'}
-                description={`Multi tenant memberships for your SaaS business.`}
+                label={'Pagos y saldo'}
+                description={`Registra pagos, cargos y mora; el saldo de cada contrato se recalcula solo.`}
               />
 
               <FeatureCard
                 className={'relative col-span-2 overflow-hidden'}
-                label={'Billing'}
-                description={`Makerkit supports multiple payment gateways to charge your customers.`}
+                label={'Multi-organización'}
+                description={`Cada organización con sus datos aislados y roles de equipo.`}
               />
             </FeatureGrid>
           </FeatureShowcase>
