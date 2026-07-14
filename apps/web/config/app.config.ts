@@ -32,7 +32,7 @@ const AppConfigSchema = z
         description: `This is the default locale of your SaaS.`,
         required_error: `Please provide the variable NEXT_PUBLIC_DEFAULT_LOCALE`,
       })
-      .default('en'),
+      .default('es'),
     theme: z.enum(['light', 'dark', 'system']),
     production: z.boolean(),
     themeColor: z.string(),
