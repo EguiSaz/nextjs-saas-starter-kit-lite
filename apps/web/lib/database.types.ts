@@ -208,6 +208,89 @@ export type Database = {
           },
         ]
       }
+      incidencias: {
+        Row: {
+          contrato_id: string | null
+          costo: number
+          created_at: string
+          created_by: string | null
+          descripcion: string | null
+          estado: Database["public"]["Enums"]["estado_incidencia"]
+          fecha_resolucion: string | null
+          id: string
+          organization_id: string
+          prioridad: Database["public"]["Enums"]["prioridad_incidencia"]
+          propiedad_id: string
+          responsable: Database["public"]["Enums"]["responsable_pago"]
+          titulo: string
+          transaccion_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          contrato_id?: string | null
+          costo?: number
+          created_at?: string
+          created_by?: string | null
+          descripcion?: string | null
+          estado?: Database["public"]["Enums"]["estado_incidencia"]
+          fecha_resolucion?: string | null
+          id?: string
+          organization_id: string
+          prioridad?: Database["public"]["Enums"]["prioridad_incidencia"]
+          propiedad_id: string
+          responsable?: Database["public"]["Enums"]["responsable_pago"]
+          titulo: string
+          transaccion_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contrato_id?: string | null
+          costo?: number
+          created_at?: string
+          created_by?: string | null
+          descripcion?: string | null
+          estado?: Database["public"]["Enums"]["estado_incidencia"]
+          fecha_resolucion?: string | null
+          id?: string
+          organization_id?: string
+          prioridad?: Database["public"]["Enums"]["prioridad_incidencia"]
+          propiedad_id?: string
+          responsable?: Database["public"]["Enums"]["responsable_pago"]
+          titulo?: string
+          transaccion_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incidencias_organization_id_contrato_id_fkey"
+            columns: ["organization_id", "contrato_id"]
+            isOneToOne: false
+            referencedRelation: "contratos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "incidencias_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidencias_organization_id_propiedad_id_fkey"
+            columns: ["organization_id", "propiedad_id"]
+            isOneToOne: false
+            referencedRelation: "propiedades"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "incidencias_transaccion_id_fkey"
+            columns: ["transaccion_id"]
+            isOneToOne: true
+            referencedRelation: "transacciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inquilinos: {
         Row: {
           contacto_emergencia: string | null
@@ -557,6 +640,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string[]
       }
+      facturar_incidencia: {
+        Args: { p_incidencia_id: string }
+        Returns: string
+      }
       has_permission: {
         Args: {
           org_id: string
@@ -600,7 +687,10 @@ export type Database = {
         | "ajuste"
         | "pago"
       estado_contrato: "activo" | "finalizado"
+      estado_incidencia: "abierta" | "en_progreso" | "resuelta"
       estado_propiedad: "disponible" | "ocupada" | "inactiva"
+      prioridad_incidencia: "baja" | "media" | "alta"
+      responsable_pago: "arrendador" | "inquilino"
       tipo_propiedad:
         | "departamento"
         | "casa"
@@ -1296,7 +1386,10 @@ export const Constants = {
         "pago",
       ],
       estado_contrato: ["activo", "finalizado"],
+      estado_incidencia: ["abierta", "en_progreso", "resuelta"],
       estado_propiedad: ["disponible", "ocupada", "inactiva"],
+      prioridad_incidencia: ["baja", "media", "alta"],
+      responsable_pago: ["arrendador", "inquilino"],
       tipo_propiedad: [
         "departamento",
         "casa",

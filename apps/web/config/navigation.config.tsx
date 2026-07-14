@@ -5,6 +5,7 @@ import {
   Home,
   User,
   Users,
+  Wrench,
 } from 'lucide-react';
 import { z } from 'zod';
 
@@ -43,6 +44,11 @@ const routes = [
         label: 'Contratos',
         path: pathsConfig.app.contratos,
         Icon: <FileText className={iconClasses} />,
+      },
+      {
+        label: 'Incidencias',
+        path: pathsConfig.app.incidencias,
+        Icon: <Wrench className={iconClasses} />,
       },
     ],
   },
