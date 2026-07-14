@@ -21,6 +21,8 @@ import { getSupabaseServerClient } from '@kit/supabase/server-client';
 import { formatDate, formatMoney } from '~/lib/format';
 
 import { CerrarContratoDialog } from '../_components/cerrar-contrato-dialog';
+import { RegistrarCargoDialog } from '../_components/registrar-cargo-dialog';
+import { RegistrarPagoDialog } from '../_components/registrar-pago-dialog';
 
 const CATEGORIA_LABEL: Record<string, string> = {
   deposito: 'Depósito',
@@ -77,10 +79,17 @@ async function ContratoDetailPage({
         description={inquilinoRes.data?.nombre ?? ''}
       >
         {activo ? (
-          <CerrarContratoDialog
-            contratoId={contrato.id}
-            deposito={Number(contrato.deposito)}
-          />
+          <div className={'flex flex-wrap items-center gap-2'}>
+            <RegistrarPagoDialog
+              contratoId={contrato.id}
+              saldo={Number(contrato.saldo)}
+            />
+            <RegistrarCargoDialog contratoId={contrato.id} />
+            <CerrarContratoDialog
+              contratoId={contrato.id}
+              deposito={Number(contrato.deposito)}
+            />
+          </div>
         ) : null}
       </PageHeader>
 
