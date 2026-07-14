@@ -126,6 +126,88 @@ export type Database = {
           },
         ]
       }
+      contratos: {
+        Row: {
+          contrato_html: string | null
+          created_at: string
+          created_by: string | null
+          deposito: number
+          deposito_retenido: number | null
+          dia_pago: number
+          estado: Database["public"]["Enums"]["estado_contrato"]
+          fecha_cierre: string | null
+          fecha_fin: string
+          fecha_inicio: string
+          id: string
+          inquilino_id: string
+          organization_id: string
+          propiedad_id: string
+          renta_mensual: number
+          saldo: number
+          updated_at: string
+        }
+        Insert: {
+          contrato_html?: string | null
+          created_at?: string
+          created_by?: string | null
+          deposito?: number
+          deposito_retenido?: number | null
+          dia_pago: number
+          estado?: Database["public"]["Enums"]["estado_contrato"]
+          fecha_cierre?: string | null
+          fecha_fin: string
+          fecha_inicio: string
+          id?: string
+          inquilino_id: string
+          organization_id: string
+          propiedad_id: string
+          renta_mensual: number
+          saldo?: number
+          updated_at?: string
+        }
+        Update: {
+          contrato_html?: string | null
+          created_at?: string
+          created_by?: string | null
+          deposito?: number
+          deposito_retenido?: number | null
+          dia_pago?: number
+          estado?: Database["public"]["Enums"]["estado_contrato"]
+          fecha_cierre?: string | null
+          fecha_fin?: string
+          fecha_inicio?: string
+          id?: string
+          inquilino_id?: string
+          organization_id?: string
+          propiedad_id?: string
+          renta_mensual?: number
+          saldo?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contratos_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contratos_organization_id_inquilino_id_fkey"
+            columns: ["organization_id", "inquilino_id"]
+            isOneToOne: false
+            referencedRelation: "inquilinos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "contratos_organization_id_propiedad_id_fkey"
+            columns: ["organization_id", "propiedad_id"]
+            isOneToOne: false
+            referencedRelation: "propiedades"
+            referencedColumns: ["organization_id", "id"]
+          },
+        ]
+      }
       inquilinos: {
         Row: {
           contacto_emergencia: string | null
@@ -406,6 +488,66 @@ export type Database = {
         }
         Relationships: []
       }
+      transacciones: {
+        Row: {
+          categoria: Database["public"]["Enums"]["categoria_transaccion"]
+          concepto: string
+          contrato_id: string
+          created_at: string
+          created_by: string | null
+          fecha: string
+          id: string
+          metodo_pago: string | null
+          monto: number
+          organization_id: string
+          periodo: string | null
+          tipo: Database["public"]["Enums"]["tipo_transaccion"]
+        }
+        Insert: {
+          categoria: Database["public"]["Enums"]["categoria_transaccion"]
+          concepto: string
+          contrato_id: string
+          created_at?: string
+          created_by?: string | null
+          fecha?: string
+          id?: string
+          metodo_pago?: string | null
+          monto: number
+          organization_id: string
+          periodo?: string | null
+          tipo: Database["public"]["Enums"]["tipo_transaccion"]
+        }
+        Update: {
+          categoria?: Database["public"]["Enums"]["categoria_transaccion"]
+          concepto?: string
+          contrato_id?: string
+          created_at?: string
+          created_by?: string | null
+          fecha?: string
+          id?: string
+          metodo_pago?: string | null
+          monto?: number
+          organization_id?: string
+          periodo?: string | null
+          tipo?: Database["public"]["Enums"]["tipo_transaccion"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transacciones_organization_id_contrato_id_fkey"
+            columns: ["organization_id", "contrato_id"]
+            isOneToOne: false
+            referencedRelation: "contratos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "transacciones_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -430,6 +572,10 @@ export type Database = {
         Args: { org_id: string }
         Returns: boolean
       }
+      recalc_balance: {
+        Args: { p_contrato_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_permission:
@@ -446,6 +592,14 @@ export type Database = {
         | "incidencias.manage"
         | "plantillas.manage"
         | "reportes.view"
+      categoria_transaccion:
+        | "deposito"
+        | "renta"
+        | "mora"
+        | "gasto"
+        | "ajuste"
+        | "pago"
+      estado_contrato: "activo" | "finalizado"
       estado_propiedad: "disponible" | "ocupada" | "inactiva"
       tipo_propiedad:
         | "departamento"
@@ -455,6 +609,7 @@ export type Database = {
         | "bodega"
         | "terreno"
         | "otro"
+      tipo_transaccion: "cargo" | "abono"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1132,6 +1287,15 @@ export const Constants = {
         "plantillas.manage",
         "reportes.view",
       ],
+      categoria_transaccion: [
+        "deposito",
+        "renta",
+        "mora",
+        "gasto",
+        "ajuste",
+        "pago",
+      ],
+      estado_contrato: ["activo", "finalizado"],
       estado_propiedad: ["disponible", "ocupada", "inactiva"],
       tipo_propiedad: [
         "departamento",
@@ -1142,6 +1306,7 @@ export const Constants = {
         "terreno",
         "otro",
       ],
+      tipo_transaccion: ["cargo", "abono"],
     },
   },
   storage: {

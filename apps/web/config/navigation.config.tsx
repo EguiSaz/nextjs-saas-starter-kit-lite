@@ -1,4 +1,11 @@
-import { Building2, Contact, Home, User, Users } from 'lucide-react';
+import {
+  Building2,
+  Contact,
+  FileText,
+  Home,
+  User,
+  Users,
+} from 'lucide-react';
 import { z } from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -31,6 +38,11 @@ const routes = [
         label: 'Inquilinos',
         path: pathsConfig.app.inquilinos,
         Icon: <Contact className={iconClasses} />,
+      },
+      {
+        label: 'Contratos',
+        path: pathsConfig.app.contratos,
+        Icon: <FileText className={iconClasses} />,
       },
     ],
   },
