@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   Building2,
   Contact,
   FileText,
@@ -55,6 +56,11 @@ const routes = [
         label: 'Plantillas',
         path: pathsConfig.app.plantillas,
         Icon: <FileStack className={iconClasses} />,
+      },
+      {
+        label: 'Reportes',
+        path: pathsConfig.app.reportes,
+        Icon: <BarChart3 className={iconClasses} />,
       },
     ],
   },
