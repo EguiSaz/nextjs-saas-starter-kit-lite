@@ -5,7 +5,7 @@ import { createI18nSettings } from '@kit/i18n';
  * This is used as a fallback language when the selected language is not supported.
  *
  */
-const defaultLanguage = process.env.NEXT_PUBLIC_DEFAULT_LOCALE ?? 'en';
+const defaultLanguage = process.env.NEXT_PUBLIC_DEFAULT_LOCALE ?? 'es';
 
 /**
  * The list of supported languages.

@@ -1,4 +1,14 @@
-import { Home, User } from 'lucide-react';
+import {
+  BarChart3,
+  Building2,
+  Contact,
+  FileText,
+  Home,
+  FileStack,
+  User,
+  Users,
+  Wrench,
+} from 'lucide-react';
 import { z } from 'zod';
 
 import { NavigationConfigSchema } from '@kit/ui/navigation-schema';
@@ -16,6 +26,41 @@ const routes = [
         path: pathsConfig.app.home,
         Icon: <Home className={iconClasses} />,
         end: true,
+      },
+      {
+        label: 'Arrendadores',
+        path: pathsConfig.app.arrendadores,
+        Icon: <Users className={iconClasses} />,
+      },
+      {
+        label: 'Propiedades',
+        path: pathsConfig.app.propiedades,
+        Icon: <Building2 className={iconClasses} />,
+      },
+      {
+        label: 'Inquilinos',
+        path: pathsConfig.app.inquilinos,
+        Icon: <Contact className={iconClasses} />,
+      },
+      {
+        label: 'Contratos',
+        path: pathsConfig.app.contratos,
+        Icon: <FileText className={iconClasses} />,
+      },
+      {
+        label: 'Incidencias',
+        path: pathsConfig.app.incidencias,
+        Icon: <Wrench className={iconClasses} />,
+      },
+      {
+        label: 'Plantillas',
+        path: pathsConfig.app.plantillas,
+        Icon: <FileStack className={iconClasses} />,
+      },
+      {
+        label: 'Reportes',
+        path: pathsConfig.app.reportes,
+        Icon: <BarChart3 className={iconClasses} />,
       },
     ],
   },

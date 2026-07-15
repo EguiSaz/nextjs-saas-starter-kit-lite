@@ -4,496 +4,1455 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
 export type Database = {
   graphql_public: {
     Tables: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
       graphql: {
         Args: {
-          operationName?: string;
-          query?: string;
-          variables?: Json;
-          extensions?: Json;
-        };
-        Returns: Json;
-      };
-    };
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       accounts: {
         Row: {
-          created_at: string | null;
-          created_by: string | null;
-          email: string | null;
-          id: string;
-          name: string;
-          picture_url: string | null;
-          public_data: Json;
-          updated_at: string | null;
-          updated_by: string | null;
-        };
+          created_at: string | null
+          created_by: string | null
+          email: string | null
+          id: string
+          name: string
+          picture_url: string | null
+          public_data: Json
+          updated_at: string | null
+          updated_by: string | null
+        }
         Insert: {
-          created_at?: string | null;
-          created_by?: string | null;
-          email?: string | null;
-          id?: string;
-          name: string;
-          picture_url?: string | null;
-          public_data?: Json;
-          updated_at?: string | null;
-          updated_by?: string | null;
-        };
+          created_at?: string | null
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          picture_url?: string | null
+          public_data?: Json
+          updated_at?: string | null
+          updated_by?: string | null
+        }
         Update: {
-          created_at?: string | null;
-          created_by?: string | null;
-          email?: string | null;
-          id?: string;
-          name?: string;
-          picture_url?: string | null;
-          public_data?: Json;
-          updated_at?: string | null;
-          updated_by?: string | null;
-        };
-        Relationships: [];
-      };
-    };
+          created_at?: string | null
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          picture_url?: string | null
+          public_data?: Json
+          updated_at?: string | null
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      arrendadores: {
+        Row: {
+          comision_pct: number
+          created_at: string
+          created_by: string | null
+          cuenta_bancaria: string | null
+          email: string | null
+          es_propio: boolean
+          id: string
+          identificacion: string | null
+          nombre: string
+          notas: string | null
+          organization_id: string
+          telefono: string | null
+          updated_at: string
+        }
+        Insert: {
+          comision_pct?: number
+          created_at?: string
+          created_by?: string | null
+          cuenta_bancaria?: string | null
+          email?: string | null
+          es_propio?: boolean
+          id?: string
+          identificacion?: string | null
+          nombre: string
+          notas?: string | null
+          organization_id: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Update: {
+          comision_pct?: number
+          created_at?: string
+          created_by?: string | null
+          cuenta_bancaria?: string | null
+          email?: string | null
+          es_propio?: boolean
+          id?: string
+          identificacion?: string | null
+          nombre?: string
+          notas?: string | null
+          organization_id?: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "arrendadores_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contratos: {
+        Row: {
+          contrato_html: string | null
+          created_at: string
+          created_by: string | null
+          deposito: number
+          deposito_retenido: number | null
+          dia_pago: number
+          estado: Database["public"]["Enums"]["estado_contrato"]
+          fecha_cierre: string | null
+          fecha_fin: string
+          fecha_inicio: string
+          id: string
+          inquilino_id: string
+          organization_id: string
+          propiedad_id: string
+          renta_mensual: number
+          saldo: number
+          updated_at: string
+        }
+        Insert: {
+          contrato_html?: string | null
+          created_at?: string
+          created_by?: string | null
+          deposito?: number
+          deposito_retenido?: number | null
+          dia_pago: number
+          estado?: Database["public"]["Enums"]["estado_contrato"]
+          fecha_cierre?: string | null
+          fecha_fin: string
+          fecha_inicio: string
+          id?: string
+          inquilino_id: string
+          organization_id: string
+          propiedad_id: string
+          renta_mensual: number
+          saldo?: number
+          updated_at?: string
+        }
+        Update: {
+          contrato_html?: string | null
+          created_at?: string
+          created_by?: string | null
+          deposito?: number
+          deposito_retenido?: number | null
+          dia_pago?: number
+          estado?: Database["public"]["Enums"]["estado_contrato"]
+          fecha_cierre?: string | null
+          fecha_fin?: string
+          fecha_inicio?: string
+          id?: string
+          inquilino_id?: string
+          organization_id?: string
+          propiedad_id?: string
+          renta_mensual?: number
+          saldo?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contratos_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contratos_organization_id_inquilino_id_fkey"
+            columns: ["organization_id", "inquilino_id"]
+            isOneToOne: false
+            referencedRelation: "inquilinos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "contratos_organization_id_propiedad_id_fkey"
+            columns: ["organization_id", "propiedad_id"]
+            isOneToOne: false
+            referencedRelation: "propiedades"
+            referencedColumns: ["organization_id", "id"]
+          },
+        ]
+      }
+      incidencias: {
+        Row: {
+          contrato_id: string | null
+          costo: number
+          created_at: string
+          created_by: string | null
+          descripcion: string | null
+          estado: Database["public"]["Enums"]["estado_incidencia"]
+          fecha_resolucion: string | null
+          id: string
+          organization_id: string
+          prioridad: Database["public"]["Enums"]["prioridad_incidencia"]
+          propiedad_id: string
+          responsable: Database["public"]["Enums"]["responsable_pago"]
+          titulo: string
+          transaccion_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          contrato_id?: string | null
+          costo?: number
+          created_at?: string
+          created_by?: string | null
+          descripcion?: string | null
+          estado?: Database["public"]["Enums"]["estado_incidencia"]
+          fecha_resolucion?: string | null
+          id?: string
+          organization_id: string
+          prioridad?: Database["public"]["Enums"]["prioridad_incidencia"]
+          propiedad_id: string
+          responsable?: Database["public"]["Enums"]["responsable_pago"]
+          titulo: string
+          transaccion_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contrato_id?: string | null
+          costo?: number
+          created_at?: string
+          created_by?: string | null
+          descripcion?: string | null
+          estado?: Database["public"]["Enums"]["estado_incidencia"]
+          fecha_resolucion?: string | null
+          id?: string
+          organization_id?: string
+          prioridad?: Database["public"]["Enums"]["prioridad_incidencia"]
+          propiedad_id?: string
+          responsable?: Database["public"]["Enums"]["responsable_pago"]
+          titulo?: string
+          transaccion_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incidencias_organization_id_contrato_id_fkey"
+            columns: ["organization_id", "contrato_id"]
+            isOneToOne: false
+            referencedRelation: "contratos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "incidencias_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidencias_organization_id_propiedad_id_fkey"
+            columns: ["organization_id", "propiedad_id"]
+            isOneToOne: false
+            referencedRelation: "propiedades"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "incidencias_transaccion_id_fkey"
+            columns: ["transaccion_id"]
+            isOneToOne: true
+            referencedRelation: "transacciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inquilinos: {
+        Row: {
+          contacto_emergencia: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          identificacion: string | null
+          nombre: string
+          notas: string | null
+          organization_id: string
+          telefono: string | null
+          updated_at: string
+        }
+        Insert: {
+          contacto_emergencia?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          identificacion?: string | null
+          nombre: string
+          notas?: string | null
+          organization_id: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Update: {
+          contacto_emergencia?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          identificacion?: string | null
+          nombre?: string
+          notas?: string | null
+          organization_id?: string
+          telefono?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inquilinos_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invitations: {
+        Row: {
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invite_token: string
+          invited_by: string | null
+          organization_id: string
+          role: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          expires_at?: string
+          id?: string
+          invite_token?: string
+          invited_by?: string | null
+          organization_id: string
+          role: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invite_token?: string
+          invited_by?: string | null
+          organization_id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invitations_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invitations_role_fkey"
+            columns: ["role"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["name"]
+          },
+        ]
+      }
+      memberships: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          organization_id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          organization_id: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          organization_id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "memberships_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "memberships_role_fkey"
+            columns: ["role"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["name"]
+          },
+        ]
+      }
+      organizations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+          public_data: Json
+          slug: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name: string
+          public_data?: Json
+          slug?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          public_data?: Json
+          slug?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      plantillas: {
+        Row: {
+          contenido: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          nombre: string
+          organization_id: string
+          tipo: Database["public"]["Enums"]["tipo_plantilla"]
+          updated_at: string
+        }
+        Insert: {
+          contenido?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          nombre: string
+          organization_id: string
+          tipo?: Database["public"]["Enums"]["tipo_plantilla"]
+          updated_at?: string
+        }
+        Update: {
+          contenido?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          nombre?: string
+          organization_id?: string
+          tipo?: Database["public"]["Enums"]["tipo_plantilla"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plantillas_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      propiedades: {
+        Row: {
+          alias: string
+          arrendador_id: string
+          banos: number | null
+          created_at: string
+          created_by: string | null
+          direccion: string
+          estado: Database["public"]["Enums"]["estado_propiedad"]
+          habitaciones: number | null
+          id: string
+          metros_cuadrados: number | null
+          notas: string | null
+          organization_id: string
+          tipo: Database["public"]["Enums"]["tipo_propiedad"]
+          updated_at: string
+        }
+        Insert: {
+          alias: string
+          arrendador_id: string
+          banos?: number | null
+          created_at?: string
+          created_by?: string | null
+          direccion: string
+          estado?: Database["public"]["Enums"]["estado_propiedad"]
+          habitaciones?: number | null
+          id?: string
+          metros_cuadrados?: number | null
+          notas?: string | null
+          organization_id: string
+          tipo?: Database["public"]["Enums"]["tipo_propiedad"]
+          updated_at?: string
+        }
+        Update: {
+          alias?: string
+          arrendador_id?: string
+          banos?: number | null
+          created_at?: string
+          created_by?: string | null
+          direccion?: string
+          estado?: Database["public"]["Enums"]["estado_propiedad"]
+          habitaciones?: number | null
+          id?: string
+          metros_cuadrados?: number | null
+          notas?: string | null
+          organization_id?: string
+          tipo?: Database["public"]["Enums"]["tipo_propiedad"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "propiedades_organization_id_arrendador_id_fkey"
+            columns: ["organization_id", "arrendador_id"]
+            isOneToOne: false
+            referencedRelation: "arrendadores"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "propiedades_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      role_permissions: {
+        Row: {
+          id: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: string
+        }
+        Insert: {
+          id?: never
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: string
+        }
+        Update: {
+          id?: never
+          permission?: Database["public"]["Enums"]["app_permission"]
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "role_permissions_role_fkey"
+            columns: ["role"]
+            isOneToOne: false
+            referencedRelation: "roles"
+            referencedColumns: ["name"]
+          },
+        ]
+      }
+      roles: {
+        Row: {
+          hierarchy_level: number
+          name: string
+        }
+        Insert: {
+          hierarchy_level: number
+          name: string
+        }
+        Update: {
+          hierarchy_level?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      transacciones: {
+        Row: {
+          categoria: Database["public"]["Enums"]["categoria_transaccion"]
+          concepto: string
+          contrato_id: string
+          created_at: string
+          created_by: string | null
+          fecha: string
+          id: string
+          metodo_pago: string | null
+          monto: number
+          organization_id: string
+          periodo: string | null
+          tipo: Database["public"]["Enums"]["tipo_transaccion"]
+        }
+        Insert: {
+          categoria: Database["public"]["Enums"]["categoria_transaccion"]
+          concepto: string
+          contrato_id: string
+          created_at?: string
+          created_by?: string | null
+          fecha?: string
+          id?: string
+          metodo_pago?: string | null
+          monto: number
+          organization_id: string
+          periodo?: string | null
+          tipo: Database["public"]["Enums"]["tipo_transaccion"]
+        }
+        Update: {
+          categoria?: Database["public"]["Enums"]["categoria_transaccion"]
+          concepto?: string
+          contrato_id?: string
+          created_at?: string
+          created_by?: string | null
+          fecha?: string
+          id?: string
+          metodo_pago?: string | null
+          monto?: number
+          organization_id?: string
+          periodo?: string | null
+          tipo?: Database["public"]["Enums"]["tipo_transaccion"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transacciones_organization_id_contrato_id_fkey"
+            columns: ["organization_id", "contrato_id"]
+            isOneToOne: false
+            referencedRelation: "contratos"
+            referencedColumns: ["organization_id", "id"]
+          },
+          {
+            foreignKeyName: "transacciones_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      auth_org_ids: {
+        Args: Record<PropertyKey, never>
+        Returns: string[]
+      }
+      facturar_incidencia: {
+        Args: { p_incidencia_id: string }
+        Returns: string
+      }
+      generar_cargos_renta: {
+        Args: { p_organization_id?: string; p_periodo: string }
+        Returns: number
+      }
+      has_permission: {
+        Args: {
+          org_id: string
+          perm: Database["public"]["Enums"]["app_permission"]
+        }
+        Returns: boolean
+      }
+      is_org_member: {
+        Args: { org_id: string }
+        Returns: boolean
+      }
+      is_org_owner: {
+        Args: { org_id: string }
+        Returns: boolean
+      }
+      recalc_balance: {
+        Args: { p_contrato_id: string }
+        Returns: undefined
+      }
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      app_permission:
+        | "organization.manage"
+        | "billing.manage"
+        | "members.manage"
+        | "roles.manage"
+        | "arrendadores.manage"
+        | "propiedades.manage"
+        | "inquilinos.manage"
+        | "contratos.manage"
+        | "contratos.close"
+        | "transacciones.manage"
+        | "incidencias.manage"
+        | "plantillas.manage"
+        | "reportes.view"
+      categoria_transaccion:
+        | "deposito"
+        | "renta"
+        | "mora"
+        | "gasto"
+        | "ajuste"
+        | "pago"
+      estado_contrato: "activo" | "finalizado"
+      estado_incidencia: "abierta" | "en_progreso" | "resuelta"
+      estado_propiedad: "disponible" | "ocupada" | "inactiva"
+      prioridad_incidencia: "baja" | "media" | "alta"
+      responsable_pago: "arrendador" | "inquilino"
+      tipo_plantilla: "contrato" | "recordatorio" | "recibo" | "otro"
+      tipo_propiedad:
+        | "departamento"
+        | "casa"
+        | "local"
+        | "oficina"
+        | "bodega"
+        | "terreno"
+        | "otro"
+      tipo_transaccion: "cargo" | "abono"
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
   storage: {
     Tables: {
       buckets: {
         Row: {
-          allowed_mime_types: string[] | null;
-          avif_autodetection: boolean | null;
-          created_at: string | null;
-          file_size_limit: number | null;
-          id: string;
-          name: string;
-          owner: string | null;
-          owner_id: string | null;
-          public: boolean | null;
-          updated_at: string | null;
-        };
+          allowed_mime_types: string[] | null
+          avif_autodetection: boolean | null
+          created_at: string | null
+          file_size_limit: number | null
+          id: string
+          name: string
+          owner: string | null
+          owner_id: string | null
+          public: boolean | null
+          type: Database["storage"]["Enums"]["buckettype"]
+          updated_at: string | null
+        }
         Insert: {
-          allowed_mime_types?: string[] | null;
-          avif_autodetection?: boolean | null;
-          created_at?: string | null;
-          file_size_limit?: number | null;
-          id: string;
-          name: string;
-          owner?: string | null;
-          owner_id?: string | null;
-          public?: boolean | null;
-          updated_at?: string | null;
-        };
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
+          created_at?: string | null
+          file_size_limit?: number | null
+          id: string
+          name: string
+          owner?: string | null
+          owner_id?: string | null
+          public?: boolean | null
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string | null
+        }
         Update: {
-          allowed_mime_types?: string[] | null;
-          avif_autodetection?: boolean | null;
-          created_at?: string | null;
-          file_size_limit?: number | null;
-          id?: string;
-          name?: string;
-          owner?: string | null;
-          owner_id?: string | null;
-          public?: boolean | null;
-          updated_at?: string | null;
-        };
-        Relationships: [];
-      };
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
+          created_at?: string | null
+          file_size_limit?: number | null
+          id?: string
+          name?: string
+          owner?: string | null
+          owner_id?: string | null
+          public?: boolean | null
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      buckets_analytics: {
+        Row: {
+          created_at: string
+          format: string
+          id: string
+          type: Database["storage"]["Enums"]["buckettype"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          format?: string
+          id: string
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          format?: string
+          id?: string
+          type?: Database["storage"]["Enums"]["buckettype"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      iceberg_namespaces: {
+        Row: {
+          bucket_id: string
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "iceberg_namespaces_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets_analytics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      iceberg_tables: {
+        Row: {
+          bucket_id: string
+          created_at: string
+          id: string
+          location: string
+          name: string
+          namespace_id: string
+          updated_at: string
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string
+          id?: string
+          location: string
+          name: string
+          namespace_id: string
+          updated_at?: string
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string
+          id?: string
+          location?: string
+          name?: string
+          namespace_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "iceberg_tables_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets_analytics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "iceberg_tables_namespace_id_fkey"
+            columns: ["namespace_id"]
+            isOneToOne: false
+            referencedRelation: "iceberg_namespaces"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       migrations: {
         Row: {
-          executed_at: string | null;
-          hash: string;
-          id: number;
-          name: string;
-        };
+          executed_at: string | null
+          hash: string
+          id: number
+          name: string
+        }
         Insert: {
-          executed_at?: string | null;
-          hash: string;
-          id: number;
-          name: string;
-        };
+          executed_at?: string | null
+          hash: string
+          id: number
+          name: string
+        }
         Update: {
-          executed_at?: string | null;
-          hash?: string;
-          id?: number;
-          name?: string;
-        };
-        Relationships: [];
-      };
+          executed_at?: string | null
+          hash?: string
+          id?: number
+          name?: string
+        }
+        Relationships: []
+      }
       objects: {
         Row: {
-          bucket_id: string | null;
-          created_at: string | null;
-          id: string;
-          last_accessed_at: string | null;
-          metadata: Json | null;
-          name: string | null;
-          owner: string | null;
-          owner_id: string | null;
-          path_tokens: string[] | null;
-          updated_at: string | null;
-          user_metadata: Json | null;
-          version: string | null;
-        };
+          bucket_id: string | null
+          created_at: string | null
+          id: string
+          last_accessed_at: string | null
+          level: number | null
+          metadata: Json | null
+          name: string | null
+          owner: string | null
+          owner_id: string | null
+          path_tokens: string[] | null
+          updated_at: string | null
+          user_metadata: Json | null
+          version: string | null
+        }
         Insert: {
-          bucket_id?: string | null;
-          created_at?: string | null;
-          id?: string;
-          last_accessed_at?: string | null;
-          metadata?: Json | null;
-          name?: string | null;
-          owner?: string | null;
-          owner_id?: string | null;
-          path_tokens?: string[] | null;
-          updated_at?: string | null;
-          user_metadata?: Json | null;
-          version?: string | null;
-        };
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          level?: number | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          owner_id?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+          user_metadata?: Json | null
+          version?: string | null
+        }
         Update: {
-          bucket_id?: string | null;
-          created_at?: string | null;
-          id?: string;
-          last_accessed_at?: string | null;
-          metadata?: Json | null;
-          name?: string | null;
-          owner?: string | null;
-          owner_id?: string | null;
-          path_tokens?: string[] | null;
-          updated_at?: string | null;
-          user_metadata?: Json | null;
-          version?: string | null;
-        };
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          level?: number | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          owner_id?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+          user_metadata?: Json | null
+          version?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: 'objects_bucketId_fkey';
-            columns: ['bucket_id'];
-            isOneToOne: false;
-            referencedRelation: 'buckets';
-            referencedColumns: ['id'];
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
           },
-        ];
-      };
+        ]
+      }
+      prefixes: {
+        Row: {
+          bucket_id: string
+          created_at: string | null
+          level: number
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string | null
+          level?: number
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string | null
+          level?: number
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prefixes_bucketId_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       s3_multipart_uploads: {
         Row: {
-          bucket_id: string;
-          created_at: string;
-          id: string;
-          in_progress_size: number;
-          key: string;
-          owner_id: string | null;
-          upload_signature: string;
-          user_metadata: Json | null;
-          version: string;
-        };
+          bucket_id: string
+          created_at: string
+          id: string
+          in_progress_size: number
+          key: string
+          owner_id: string | null
+          upload_signature: string
+          user_metadata: Json | null
+          version: string
+        }
         Insert: {
-          bucket_id: string;
-          created_at?: string;
-          id: string;
-          in_progress_size?: number;
-          key: string;
-          owner_id?: string | null;
-          upload_signature: string;
-          user_metadata?: Json | null;
-          version: string;
-        };
+          bucket_id: string
+          created_at?: string
+          id: string
+          in_progress_size?: number
+          key: string
+          owner_id?: string | null
+          upload_signature: string
+          user_metadata?: Json | null
+          version: string
+        }
         Update: {
-          bucket_id?: string;
-          created_at?: string;
-          id?: string;
-          in_progress_size?: number;
-          key?: string;
-          owner_id?: string | null;
-          upload_signature?: string;
-          user_metadata?: Json | null;
-          version?: string;
-        };
+          bucket_id?: string
+          created_at?: string
+          id?: string
+          in_progress_size?: number
+          key?: string
+          owner_id?: string | null
+          upload_signature?: string
+          user_metadata?: Json | null
+          version?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 's3_multipart_uploads_bucket_id_fkey';
-            columns: ['bucket_id'];
-            isOneToOne: false;
-            referencedRelation: 'buckets';
-            referencedColumns: ['id'];
+            foreignKeyName: "s3_multipart_uploads_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
           },
-        ];
-      };
+        ]
+      }
       s3_multipart_uploads_parts: {
         Row: {
-          bucket_id: string;
-          created_at: string;
-          etag: string;
-          id: string;
-          key: string;
-          owner_id: string | null;
-          part_number: number;
-          size: number;
-          upload_id: string;
-          version: string;
-        };
+          bucket_id: string
+          created_at: string
+          etag: string
+          id: string
+          key: string
+          owner_id: string | null
+          part_number: number
+          size: number
+          upload_id: string
+          version: string
+        }
         Insert: {
-          bucket_id: string;
-          created_at?: string;
-          etag: string;
-          id?: string;
-          key: string;
-          owner_id?: string | null;
-          part_number: number;
-          size?: number;
-          upload_id: string;
-          version: string;
-        };
+          bucket_id: string
+          created_at?: string
+          etag: string
+          id?: string
+          key: string
+          owner_id?: string | null
+          part_number: number
+          size?: number
+          upload_id: string
+          version: string
+        }
         Update: {
-          bucket_id?: string;
-          created_at?: string;
-          etag?: string;
-          id?: string;
-          key?: string;
-          owner_id?: string | null;
-          part_number?: number;
-          size?: number;
-          upload_id?: string;
-          version?: string;
-        };
+          bucket_id?: string
+          created_at?: string
+          etag?: string
+          id?: string
+          key?: string
+          owner_id?: string | null
+          part_number?: number
+          size?: number
+          upload_id?: string
+          version?: string
+        }
         Relationships: [
           {
-            foreignKeyName: 's3_multipart_uploads_parts_bucket_id_fkey';
-            columns: ['bucket_id'];
-            isOneToOne: false;
-            referencedRelation: 'buckets';
-            referencedColumns: ['id'];
+            foreignKeyName: "s3_multipart_uploads_parts_bucket_id_fkey"
+            columns: ["bucket_id"]
+            isOneToOne: false
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 's3_multipart_uploads_parts_upload_id_fkey';
-            columns: ['upload_id'];
-            isOneToOne: false;
-            referencedRelation: 's3_multipart_uploads';
-            referencedColumns: ['id'];
+            foreignKeyName: "s3_multipart_uploads_parts_upload_id_fkey"
+            columns: ["upload_id"]
+            isOneToOne: false
+            referencedRelation: "s3_multipart_uploads"
+            referencedColumns: ["id"]
           },
-        ];
-      };
-    };
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
+      add_prefixes: {
+        Args: { _bucket_id: string; _name: string }
+        Returns: undefined
+      }
       can_insert_object: {
-        Args: {
-          bucketid: string;
-          name: string;
-          owner: string;
-          metadata: Json;
-        };
-        Returns: undefined;
-      };
+        Args: { bucketid: string; metadata: Json; name: string; owner: string }
+        Returns: undefined
+      }
+      delete_leaf_prefixes: {
+        Args: { bucket_ids: string[]; names: string[] }
+        Returns: undefined
+      }
+      delete_prefix: {
+        Args: { _bucket_id: string; _name: string }
+        Returns: boolean
+      }
       extension: {
-        Args: {
-          name: string;
-        };
-        Returns: string;
-      };
+        Args: { name: string }
+        Returns: string
+      }
       filename: {
-        Args: {
-          name: string;
-        };
-        Returns: string;
-      };
+        Args: { name: string }
+        Returns: string
+      }
       foldername: {
-        Args: {
-          name: string;
-        };
-        Returns: string[];
-      };
+        Args: { name: string }
+        Returns: string[]
+      }
+      get_level: {
+        Args: { name: string }
+        Returns: number
+      }
+      get_prefix: {
+        Args: { name: string }
+        Returns: string
+      }
+      get_prefixes: {
+        Args: { name: string }
+        Returns: string[]
+      }
       get_size_by_bucket: {
-        Args: Record<PropertyKey, never>;
+        Args: Record<PropertyKey, never>
         Returns: {
-          size: number;
-          bucket_id: string;
-        }[];
-      };
+          bucket_id: string
+          size: number
+        }[]
+      }
       list_multipart_uploads_with_delimiter: {
         Args: {
-          bucket_id: string;
-          prefix_param: string;
-          delimiter_param: string;
-          max_keys?: number;
-          next_key_token?: string;
-          next_upload_token?: string;
-        };
+          bucket_id: string
+          delimiter_param: string
+          max_keys?: number
+          next_key_token?: string
+          next_upload_token?: string
+          prefix_param: string
+        }
         Returns: {
-          key: string;
-          id: string;
-          created_at: string;
-        }[];
-      };
+          created_at: string
+          id: string
+          key: string
+        }[]
+      }
       list_objects_with_delimiter: {
         Args: {
-          bucket_id: string;
-          prefix_param: string;
-          delimiter_param: string;
-          max_keys?: number;
-          start_after?: string;
-          next_token?: string;
-        };
+          bucket_id: string
+          delimiter_param: string
+          max_keys?: number
+          next_token?: string
+          prefix_param: string
+          start_after?: string
+        }
         Returns: {
-          name: string;
-          id: string;
-          metadata: Json;
-          updated_at: string;
-        }[];
-      };
+          id: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      lock_top_prefixes: {
+        Args: { bucket_ids: string[]; names: string[] }
+        Returns: undefined
+      }
       operation: {
-        Args: Record<PropertyKey, never>;
-        Returns: string;
-      };
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       search: {
         Args: {
-          prefix: string;
-          bucketname: string;
-          limits?: number;
-          levels?: number;
-          offsets?: number;
-          search?: string;
-          sortcolumn?: string;
-          sortorder?: string;
-        };
+          bucketname: string
+          levels?: number
+          limits?: number
+          offsets?: number
+          prefix: string
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
         Returns: {
-          name: string;
-          id: string;
-          updated_at: string;
-          created_at: string;
-          last_accessed_at: string;
-          metadata: Json;
-        }[];
-      };
-    };
+          created_at: string
+          id: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      search_legacy_v1: {
+        Args: {
+          bucketname: string
+          levels?: number
+          limits?: number
+          offsets?: number
+          prefix: string
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      search_v1_optimised: {
+        Args: {
+          bucketname: string
+          levels?: number
+          limits?: number
+          offsets?: number
+          prefix: string
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+      search_v2: {
+        Args: {
+          bucket_name: string
+          levels?: number
+          limits?: number
+          prefix: string
+          sort_column?: string
+          sort_column_after?: string
+          sort_order?: string
+          start_after?: string
+        }
+        Returns: {
+          created_at: string
+          id: string
+          key: string
+          last_accessed_at: string
+          metadata: Json
+          name: string
+          updated_at: string
+        }[]
+      }
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      buckettype: "STANDARD" | "ANALYTICS"
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
-};
+      [_ in never]: never
+    }
+  }
+}
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>];
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
-      Row: infer R;
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
-        PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
-        Row: infer R;
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
       }
       ? R
       : never
-    : never;
+    : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
-      Insert: infer I;
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
-        Insert: infer I;
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
       }
       ? I
       : never
-    : never;
+    : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
-      Update: infer U;
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
-        Update: infer U;
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
       }
       ? U
       : never
-    : never;
+    : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof PublicSchema['Enums']
-    | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
-    : never;
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema['CompositeTypes']
-    | { schema: keyof Database },
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database;
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
-    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
-    : never;
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {
+      app_permission: [
+        "organization.manage",
+        "billing.manage",
+        "members.manage",
+        "roles.manage",
+        "arrendadores.manage",
+        "propiedades.manage",
+        "inquilinos.manage",
+        "contratos.manage",
+        "contratos.close",
+        "transacciones.manage",
+        "incidencias.manage",
+        "plantillas.manage",
+        "reportes.view",
+      ],
+      categoria_transaccion: [
+        "deposito",
+        "renta",
+        "mora",
+        "gasto",
+        "ajuste",
+        "pago",
+      ],
+      estado_contrato: ["activo", "finalizado"],
+      estado_incidencia: ["abierta", "en_progreso", "resuelta"],
+      estado_propiedad: ["disponible", "ocupada", "inactiva"],
+      prioridad_incidencia: ["baja", "media", "alta"],
+      responsable_pago: ["arrendador", "inquilino"],
+      tipo_plantilla: ["contrato", "recordatorio", "recibo", "otro"],
+      tipo_propiedad: [
+        "departamento",
+        "casa",
+        "local",
+        "oficina",
+        "bodega",
+        "terreno",
+        "otro",
+      ],
+      tipo_transaccion: ["cargo", "abono"],
+    },
+  },
+  storage: {
+    Enums: {
+      buckettype: ["STANDARD", "ANALYTICS"],
+    },
+  },
+} as const
+
