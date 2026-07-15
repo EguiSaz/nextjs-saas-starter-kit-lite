@@ -57,6 +57,7 @@ import {
   CrearContratoSchema,
 } from '../_lib/schema/contrato.schema';
 import { crearContratoAction } from '../_lib/server/server-actions';
+import { GenerarCargosButton } from './generar-cargos-button';
 
 export type ContratoRow = {
   id: string;
@@ -92,7 +93,8 @@ export function ContratosList({
 
   return (
     <div className={'flex flex-col space-y-4'}>
-      <div className={'flex justify-end'}>
+      <div className={'flex flex-wrap justify-end gap-2'}>
+        <GenerarCargosButton />
         <Button onClick={() => setDialogOpen(true)} disabled={!puedeCrear}>
           <Plus className={'mr-2 w-4'} />
           Nuevo contrato

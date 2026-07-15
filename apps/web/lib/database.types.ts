@@ -685,6 +685,10 @@ export type Database = {
         Args: { p_incidencia_id: string }
         Returns: string
       }
+      generar_cargos_renta: {
+        Args: { p_organization_id?: string; p_periodo: string }
+        Returns: number
+      }
       has_permission: {
         Args: {
           org_id: string
